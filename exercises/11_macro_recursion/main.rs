@@ -1,5 +1,14 @@
 // TODO: Create the `curry!()` macro.
-
+#![recursion_limit = "256"]
+macro_rules! curry {
+    (_, $block:block) => {$block};
+    (($var:ident: $ty:ty) => $(($var1:ident: $ty1:ty) =>)* _, $block:block) => {
+        move |$var: $ty| {
+            print_curried_argument($var);
+            curry!($(($var1: $ty1) =>)* _, $block)
+        }
+    };
+}
 ////////// DO NOT CHANGE BELOW HERE /////////
 
 fn print_numbers(nums: &Vec<i32>) {
@@ -20,7 +29,7 @@ fn main() {
         min < *item && *item < max
     });
 
-    let curry_filter_between = curry!((min: i32) => (max:i32) => (vec: &Vec<i32>) => _, {
+    let curry_filter_between = curry!((min: i32) => (max: i32) => (vec: &Vec<i32>) => _, {
         let filter_between = is_between(min)(max);
         vec.iter().filter_map(|i| if filter_between(i) { Some(*i) } else { None }).collect()
     });

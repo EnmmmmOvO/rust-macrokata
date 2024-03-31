@@ -35,6 +35,10 @@ macro_rules! digit {
 
 // TODO: create `number!()` macro.
 
+macro_rules! number {
+    ($($num:ident )+) => {concat!($(digit!($num)),+)};
+}
+
 ////////// DO NOT CHANGE BELOW HERE /////////
 
 fn main() {

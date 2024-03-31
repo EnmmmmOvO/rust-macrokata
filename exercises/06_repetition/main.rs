@@ -5,6 +5,12 @@ fn print_success() {
 ////////// DO NOT CHANGE ABOVE HERE /////////
 
 // TODO: create `if_any!()` macro.
+macro_rules! if_any {
+    ($($bool:expr),+; $block:block) => {
+        if $($bool)||+ $block
+    };
+}
+
 
 ////////// DO NOT CHANGE BELOW HERE /////////
 
